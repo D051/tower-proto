@@ -163,48 +163,47 @@ service Tower {
     // --------------------
 
     // registration
-    rpc RegisterModule (RegisterModuleRequest) returns (RegisterModuleResponse);
+    rpc register_module (RegisterModuleRequest) returns (RegisterModuleResponse);
 
     // -------------------
     // -- STATE METHODS --
     // -------------------
 
     // registration
-    rpc RegisterState (RegisterKeyRequest) returns (RegisterKeyResponse);
+    rpc register_state (RegisterKeyRequest) returns (RegisterKeyResponse);
     // push state
-    rpc PushStateStr (PushStrRequest) returns (PushResponse);
-    rpc PushStateInt32 (PushInt32Request) returns (PushResponse);
-    rpc PushStateInt64 (PushInt64Request) returns (PushResponse);
-    rpc PushStateFloat32 (PushFloat32Request) returns (PushResponse);
-    rpc PushStateFloat64 (PushFloat64Request) returns (PushResponse);
-    rpc PushStateBool (PushBoolRequest) returns (PushResponse);
+    rpc push_state_str (PushStrRequest) returns (PushResponse);
+    rpc push_state_int32 (PushInt32Request) returns (PushResponse);
+    rpc push_state_int64 (PushInt64Request) returns (PushResponse);
+    rpc push_state_float32 (PushFloat32Request) returns (PushResponse);
+    rpc push_state_float64 (PushFloat64Request) returns (PushResponse);
+    rpc push_state_bool (PushBoolRequest) returns (PushResponse);
     // pull state
-    rpc PullStateStr (PullRequest) returns (PullStrResponse);
-    rpc PullStateInt32 (PullRequest) returns (PullInt32Response);
-    rpc PullStateInt64 (PullRequest) returns (PullInt64Response);
-    rpc PullStateFloat32 (PullRequest) returns (PullFloat32Response);
-    rpc PullStateFloat64 (PullRequest) returns (PullFloat64Response);
-    rpc PullStateBool (PullRequest) returns (PullBoolResponse);
+    rpc pull_state_str (PullRequest) returns (PullStrResponse);
+    rpc pull_state_int32 (PullRequest) returns (PullInt32Response);
+    rpc pull_state_int64 (PullRequest) returns (PullInt64Response);
+    rpc pull_state_float32 (PullRequest) returns (PullFloat32Response);
+    rpc pull_state_float64 (PullRequest) returns (PullFloat64Response);
+    rpc pull_state_bool (PullRequest) returns (PullBoolResponse);
 
     // -------------------
     // -- PARAM METHODS --
     // -------------------
 
     // registration
-    rpc RegisterParam (RegisterKeyRequest) returns (RegisterKeyResponse);
+    rpc register_param (RegisterKeyRequest) returns (RegisterKeyResponse);
     // push param
-    rpc PushParamStr (PushStrRequest) returns (PushResponse);
-    rpc PushParamInt32 (PushInt32Request) returns (PushResponse);
-    rpc PushParamInt64 (PushInt64Request) returns (PushResponse);
-    rpc PushParamFloat32 (PushFloat32Request) returns (PushResponse);
-    rpc PushParamFloat64 (PushFloat64Request) returns (PushResponse);
-    rpc PushParamBool (PushBoolRequest) returns (PushResponse);
+    rpc push_paramter_str (PushStrRequest) returns (PushResponse);
+    rpc push_paramter_int32 (PushInt32Request) returns (PushResponse);
+    rpc push_paramter_int64 (PushInt64Request) returns (PushResponse);
+    rpc push_paramter_float32 (PushFloat32Request) returns (PushResponse);
+    rpc push_paramter_float64 (PushFloat64Request) returns (PushResponse);
+    rpc push_paramter_bool (PushBoolRequest) returns (PushResponse);
     // pull param
-    rpc PullParamStr (PullRequest) returns (PullStrResponse);
-    rpc PullParamInt32 (PullRequest) returns (PullInt32Response);
-    rpc PullParamInt64 (PullRequest) returns (PullInt64Response);
-    rpc PullParamFloat32 (PullRequest) returns (PullFloat32Response);
-    rpc PullParamFloat64 (PullRequest) returns (PullFloat64Response);
-    rpc PullParamBool (PullRequest) returns (PullBoolResponse);
-
+    rpc pull_param_str (PullRequest) returns (PullStrResponse);
+    rpc pull_param_int32 (PullRequest) returns (PullInt32Response);
+    rpc pull_param_int64 (PullRequest) returns (PullInt64Response);
+    rpc pull_param_float32 (PullRequest) returns (PullFloat32Response);
+    rpc pull_param_float64 (PullRequest) returns (PullFloat64Response);
+    rpc pull_param_bool (PullRequest) returns (PullBoolResponse);
 }
