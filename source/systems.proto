@@ -1,0 +1,210 @@
+// Copyright 2022 Dominik Schweigler
+
+// This Source Code Form is subject to the terms of the Mozilla Public
+// License, v. 2.0. If a copy of the MPL was not distributed with this
+// file, You can obtain one at https://mozilla.org/MPL/2.0/.
+
+// This file is part of the Tower Project and contains the protocol
+// the implementation the Extensions API. 
+
+// *********************************************************************
+// Protocol Buffers Configuration
+// *********************************************************************
+
+syntax = "proto3";
+
+package tower;
+
+// -------------------------------
+// Enums
+// -------------------------------
+
+enum ERROR {
+    // no error
+    NIL_ERR = 0;
+    // value errors
+    TYPE_MISMATCH_ERR   = 1;
+    // module errors
+    MODULE_NOT_REGISTERED_ERR       = 2;
+    MODULE_ALREADY_REGISTERED_ERR   = 3;
+    // state errors
+    STATE_NOT_REGISTERED_ERR        = 4;
+    STATE_ALREADY_REGISTERED_ERR    = 5;
+    // param errors
+    PARAM_NOT_REGISTERED_ERR        = 6;
+    PARAM_ALREADY_REGISTERED_ERR    = 7;
+}
+
+enum VALUE_CLASS {
+    NIL     = 0;
+    STRING  = 1;
+    INT32   = 2;
+    INT64   = 3;
+    FLOAT32 = 4;
+    FLOAT64 = 5;
+    BOOL    = 6;
+}
+
+// -------------------------------
+// VALUE MESSAGES
+// -------------------------------
+
+// push response
+message PushResponse {
+    ERROR error = 1;    // error if any
+}
+
+// pull request
+message PullRequest {
+    int32   mod = 1;    // value to pull from
+    int32   key = 2;    // key to pull from
+}
+
+// string push and pull
+message PushStrRequest {
+    int32   mod = 1;    // module to push to
+    int32   key = 2;    // state to push to
+    string  val = 3;    // value to push
+}
+message PullStrResponse {
+    ERROR   err = 1;    // error if any
+    string  val = 2;    // value pulled
+}
+
+// int32 push and pull
+message PushInt32Request {
+    int32   mod = 1;    // module to push to
+    int32   key = 2;    // state to push to
+    int32   val = 3;    // value to push
+}
+message PullInt32Response {
+    ERROR   err = 1;    // error if any
+    int32   val = 2;    // value pulled
+}
+
+// int64 push and pull
+message PushInt64Request {
+    int32   mod = 1;    // module to push to
+    int32   key = 2;    // state to push to
+    int64   val = 3;    // value to push
+}
+message PullInt64Response {
+    ERROR   err = 1;    // error if any
+    int64   val = 2;    // value pulled
+}
+
+// float32 push and pull
+message PushFloat32Request {
+    int32   mod = 1;    // module to push to
+    int32   key = 2;    // state to push to
+    float   val = 3;    // value to push
+}
+message PullFloat32Response {
+    ERROR   err = 1;    // error if any
+    float   val = 2;    // value pulled
+}
+
+// float64 push and pull
+message PushFloat64Request {
+    int32   mod = 1;    // module to push to
+    int32   key = 2;    // state to push to
+    double  val = 3;    // value to push
+}
+message PullFloat64Response {
+    ERROR   err = 1;    // error if any
+    double  val = 2;    // value pulled
+}
+
+// bool push and pull
+message PushBoolRequest {
+    int32   mod = 1;    // module to push to
+    int32   key = 2;    // state to push to
+    bool    val = 3;    // value to push
+}
+message PullBoolResponse {
+    ERROR   error   = 1;    // error if any
+    bool    val     = 2;    // value pulled
+}
+
+
+// -------------------------------
+// Module Messages
+// -------------------------------
+
+message RegisterModuleRequest {
+    string title        = 1;
+    string description  = 2;
+}
+
+message RegisterModuleResponse {
+    ERROR error = 1;
+    int32 id    = 2;
+}
+
+// -------------------------------
+// State Messages
+// -------------------------------
+
+message RegisterKeyRequest {
+    int32       mod     = 1;    // module to register key in
+    int32       key     = 2;    // key to register
+    VALUE_CLASS class   = 3;    // class of the key
+}
+
+message RegisterKeyResponse {
+    ERROR error = 1;    // error if any
+}
+
+
+service Tower {
+
+    // --------------------
+    // -- MODULE METHODS --
+    // --------------------
+
+    // registration
+    rpc RegisterModule (RegisterModuleRequest) returns (RegisterModuleResponse);
+
+    // -------------------
+    // -- STATE METHODS --
+    // -------------------
+
+    // registration
+    rpc RegisterState (RegisterKeyRequest) returns (RegisterKeyResponse);
+    // push state
+    rpc PushStateStr (PushStrRequest) returns (PushResponse);
+    rpc PushStateInt32 (PushInt32Request) returns (PushResponse);
+    rpc PushStateInt64 (PushInt64Request) returns (PushResponse);
+    rpc PushStateFloat32 (PushFloat32Request) returns (PushResponse);
+    rpc PushStateFloat64 (PushFloat64Request) returns (PushResponse);
+    rpc PushStateBool (PushBoolRequest) returns (PushResponse);
+    // pull state
+    rpc PullStateStr (PullRequest) returns (PullStrResponse);
+    rpc PullStateInt32 (PullRequest) returns (PullInt32Response);
+    rpc PullStateInt64 (PullRequest) returns (PullInt64Response);
+    rpc PullStateFloat32 (PullRequest) returns (PullFloat32Response);
+    rpc PullStateFloat64 (PullRequest) returns (PullFloat64Response);
+    rpc PullStateBool (PullRequest) returns (PullBoolResponse);
+
+    // -------------------
+    // -- PARAM METHODS --
+    // -------------------
+
+    // registration
+    rpc RegisterParam (RegisterKeyRequest) returns (RegisterKeyResponse);
+    // push param
+    rpc PushParamStr (PushStrRequest) returns (PushResponse);
+    rpc PushParamInt32 (PushInt32Request) returns (PushResponse);
+    rpc PushParamInt64 (PushInt64Request) returns (PushResponse);
+    rpc PushParamFloat32 (PushFloat32Request) returns (PushResponse);
+    rpc PushParamFloat64 (PushFloat64Request) returns (PushResponse);
+    rpc PushParamBool (PushBoolRequest) returns (PushResponse);
+    // pull param
+    rpc PullParamStr (PullRequest) returns (PullStrResponse);
+    rpc PullParamInt32 (PullRequest) returns (PullInt32Response);
+    rpc PullParamInt64 (PullRequest) returns (PullInt64Response);
+    rpc PullParamFloat32 (PullRequest) returns (PullFloat32Response);
+    rpc PullParamFloat64 (PullRequest) returns (PullFloat64Response);
+    rpc PullParamBool (PullRequest) returns (PullBoolResponse);
+
+}
